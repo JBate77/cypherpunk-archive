@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cypherpunk Archive — Berlin Blockchain Week 2026</title>
+<meta name="description" content="A collective memory for the cypherpunk movement, built live at Berlin Blockchain Week 2026. Scan. Speak. The archive remembers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1EFE8;
+    --ink:#15130F;
+    --pink:#F0317F;
+    --grey:#6B675E;
+    --rule:3px solid var(--ink);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  /* photocopy grain */
+  body::after{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    opacity:.07;
+    z-index:999;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+  a{color:inherit;}
+
+  /* ── top strip ───────────────────────── */
+  .strip{
+    border-bottom:var(--rule);
+    background:var(--ink);
+    color:var(--paper);
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:8px 0;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .strip span{display:inline-block;padding-left:100%;animation:ticker 28s linear infinite;}
+  @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+  @media (prefers-reduced-motion:reduce){
+    .strip span{animation:none;padding-left:24px;}
+  }
+
+  /* ── jump bar ────────────────────────── */
+  .jump{
+    position:sticky;
+    top:0;
+    z-index:60;
+    background:var(--ink);
+    color:var(--paper);
+    border-bottom:var(--rule);
+  }
+  .jump-in{
+    max-width:920px;
+    margin:0 auto;
+    padding:9px 24px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    overflow-x:auto;
+    white-space:nowrap;
+    scrollbar-width:none;
+  }
+  .jump-in::-webkit-scrollbar{display:none;}
+  .jump-label{color:var(--pink);}
+  .jump a{text-decoration:none;color:var(--paper);opacity:.85;}
+  .jump a:hover,.jump a:focus-visible{color:var(--pink);opacity:1;}
+  section{scroll-margin-top:54px;}
+
+  /* ── hero ────────────────────────────── */
+  header{padding:64px 0 48px;border-bottom:var(--rule);position:relative;}
+  .eyebrow{
+    display:inline-block;
+    border:2px solid var(--ink);
+    padding:4px 12px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    margin-bottom:28px;
+    transform:rotate(-1.2deg);
+    background:var(--paper);
+  }
+  h1{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(56px,11vw,128px);
+    line-height:.92;
+    letter-spacing:.005em;
+  }
+  h1 .pink{color:var(--pink);}
+  .hero-sub{
+    max-width:560px;
+    margin-top:28px;
+    font-size:17px;
+  }
+  .hero-cta{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:700;
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    text-decoration:none;
+    padding:14px 26px;
+    border:3px solid var(--ink);
+    background:var(--pink);
+    color:var(--ink);
+    box-shadow:5px 5px 0 var(--ink);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover,.btn:focus-visible{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink);}
+  .btn.ghost{background:var(--paper);}
+  .btn:focus-visible{outline:3px dashed var(--pink);outline-offset:4px;}
+  .stamp{
+    position:absolute;
+    right:0;
+    top:14px;
+    border:3px solid var(--pink);
+    color:var(--pink);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    font-size:13px;
+    padding:8px 14px;
+    transform:rotate(7deg);
+    opacity:.9;
+  }
+  @media(max-width:720px){.stamp{display:none;}}
+
+  /* ── knowledge graph ─────────────────── */
+  .hero-grid{
+    display:grid;
+    grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+    gap:44px;
+    align-items:center;
+  }
+  .kg{margin-top:56px;}
+  .kg svg{width:100%;height:auto;display:block;overflow:visible;}
+  .kg-edge{
+    stroke:var(--ink);
+    stroke-width:2;
+    stroke-dasharray:1;
+    animation:kg-draw .9s ease-out backwards;
+  }
+  .kg-flow{
+    stroke:var(--pink);
+    stroke-width:2.5;
+    stroke-dasharray:.08 .1;
+    animation:kg-flowmove 7s linear infinite;
+  }
+  .kg-node{
+    fill:var(--paper);
+    stroke:var(--ink);
+    stroke-width:2.5;
+    transform-box:fill-box;
+    transform-origin:center;
+    animation:kg-pop .5s cubic-bezier(.2,.85,.3,1.25) backwards;
+  }
+  .kg-node.pink{fill:var(--pink);}
+  .kg-pulse{animation:kg-pop .5s .1s cubic-bezier(.2,.85,.3,1.25) backwards, kg-pulse 2.6s 1.6s ease-in-out infinite;}
+  .kg-pulse2{animation:kg-pop .5s 1.2s cubic-bezier(.2,.85,.3,1.25) backwards, kg-pulse 2.6s 2.9s ease-in-out infinite;}
+  .kg-tag{animation:kg-fade .6s ease backwards;}
+  .kg-tag rect{fill:var(--paper);stroke:var(--ink);stroke-width:1.5;}
+  .kg-tag.pink rect{stroke:var(--pink);stroke-width:2;}
+  .kg-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    fill:var(--ink);
+  }
+  .kg-label.pink{fill:var(--pink);font-size:12.5px;}
+  .kg-cap{
+    margin-top:16px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  .kg-cap .slash{color:var(--pink);}
+  .kg-caret{color:var(--pink);animation:kg-blink 1.1s steps(1) infinite;}
+  .kg-feed{display:block;margin-top:4px;color:var(--grey);font-weight:400;}
+  @keyframes kg-draw{from{stroke-dashoffset:1;}}
+  @keyframes kg-flowmove{to{stroke-dashoffset:-2;}}
+  @keyframes kg-pop{from{opacity:0;transform:scale(.2);}}
+  @keyframes kg-fade{from{opacity:0;}}
+  @keyframes kg-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.35);}}
+  @keyframes kg-blink{50%{opacity:0;}}
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr;gap:20px;}
+    .kg{margin-top:16px;max-width:430px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .kg-edge,.kg-node,.kg-tag,.kg-pulse,.kg-pulse2,.kg-flow,.kg-caret{animation:none;}
+  }
+
+  /* ── sections ────────────────────────── */
+  section{padding:64px 0;border-bottom:var(--rule);}
+  .label{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--pink);
+    margin-bottom:18px;
+  }
+  h2{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(34px,6vw,56px);
+    line-height:1;
+    margin-bottom:26px;
+  }
+  p{max-width:640px;margin-bottom:18px;}
+  p:last-child{margin-bottom:0;}
+  strong{font-weight:700;}
+  .pink-text{color:var(--pink);font-weight:700;}
+
+  /* manifestos centrepiece */
+  .manifestos{margin:48px 0 56px;display:grid;}
+  .mani{
+    border:3px solid var(--ink);
+    background:var(--paper);
+    box-shadow:8px 8px 0 var(--ink);
+    padding:36px 32px;
+  }
+  .mani-pink{
+    background:var(--ink);
+    color:var(--paper);
+    box-shadow:8px 8px 0 var(--pink);
+  }
+  .mani-year{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(40px,7vw,64px);
+    line-height:1;
+    color:var(--pink);
+    margin-bottom:16px;
+  }
+  .mani blockquote{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(22px,3.8vw,34px);
+    line-height:1.18;
+    max-width:680px;
+  }
+  .mani cite{
+    display:block;
+    margin-top:20px;
+    font-style:normal;
+    font-size:13px;
+    color:var(--grey);
+  }
+  .mani-pink cite{color:var(--paper);opacity:.75;}
+  .mani cite a{text-decoration:underline;text-underline-offset:3px;}
+  .mani cite a:hover{color:var(--pink);}
+  .mani-divider{
+    position:relative;
+    height:128px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .mani-divider::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:0;
+    bottom:0;
+    width:3px;
+    background:var(--ink);
+  }
+  .mani-divider span{
+    position:relative;
+    border:5px solid var(--ink);
+    background:var(--pink);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:26px;
+    padding:16px 36px;
+    box-shadow:6px 6px 0 var(--ink);
+    transform:rotate(-4deg);
+  }
+  .why-sub{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(26px,4.5vw,40px);
+    margin-bottom:18px;
+  }
+  .org-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;max-width:700px;}
+  .org{
+    border:2px solid var(--ink);
+    padding:6px 13px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    background:var(--paper);
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .org:nth-child(odd){transform:rotate(-1.2deg);}
+  .org:nth-child(even){transform:rotate(1deg);}
+  .why-close{margin-top:28px;}
+
+  /* PGP armor block — the signed message */
+  .armor{
+    margin:40px 0 0;
+    border:3px solid var(--ink);
+    background:var(--ink);
+    color:var(--paper);
+    padding:32px 28px;
+    font-size:14.5px;
+    line-height:1.8;
+    position:relative;
+  }
+  .armor .head, .armor .tail{
+    color:var(--pink);
+    font-weight:700;
+    letter-spacing:.04em;
+    word-break:break-all;
+  }
+  .armor .body{display:block;margin:18px 0;max-width:none;}
+  .armor .hash{color:var(--grey);font-size:12px;word-break:break-all;display:block;margin-top:14px;}
+
+  /* steps */
+  .steps{display:grid;gap:0;margin-top:8px;}
+  .step{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:24px;
+    padding:30px 0;
+    border-top:2px solid var(--ink);
+    align-items:start;
+  }
+  .step:first-child{border-top:none;}
+  .step-num{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(44px,7vw,72px);
+    line-height:.9;
+    color:var(--paper);
+    -webkit-text-stroke:2.5px var(--ink);
+    text-stroke:2.5px var(--ink);
+  }
+  .step:nth-child(odd) .step-num{color:var(--pink);-webkit-text-stroke:0;}
+  .step h3{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:24px;
+    margin-bottom:8px;
+    letter-spacing:.02em;
+  }
+  .step p{font-size:15.5px;}
+  @media(max-width:640px){
+    .step{grid-template-columns:1fr;gap:8px;}
+  }
+
+  /* boat */
+  .boat{background:var(--pink);}
+  .boat .label{color:var(--ink);}
+  .boat .armor{background:var(--paper);color:var(--ink);border-color:var(--ink);}
+  .boat .armor .head,.boat .armor .tail{color:var(--ink);}
+  .warning{
+    display:inline-block;
+    border:2px dashed var(--ink);
+    padding:10px 16px;
+    font-size:13px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin-top:24px;
+    transform:rotate(-.8deg);
+  }
+
+  /* badges */
+  .badge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:36px;}
+  .badge{
+    border:3px solid var(--ink);
+    padding:24px 20px;
+    background:var(--paper);
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .badge h3{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:20px;
+    margin-bottom:10px;
+  }
+  .badge p{font-size:14px;margin:0;}
+  .badge .tag{color:var(--pink);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:10px;}
+
+  /* mic */
+  .mic-line{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    font-size:clamp(26px,4.5vw,40px);
+    line-height:1.1;
+    max-width:760px;
+  }
+  .mic-line em{font-style:normal;color:var(--pink);}
+
+  /* footer */
+  footer{padding:56px 0 72px;}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;align-items:flex-end;}
+  .foot-brand{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:30px;line-height:1;}
+  .foot-brand span{color:var(--pink);}
+  .foot-links{font-size:13.5px;display:flex;flex-direction:column;gap:6px;}
+  .foot-links a{text-decoration:underline;text-underline-offset:3px;}
+  .foot-links a:hover{color:var(--pink);}
+  .colophon{font-size:12px;color:var(--grey);margin-top:10px;max-width:420px;}
+</style>
+</head>
+<body>
+
+<div class="strip" aria-hidden="true">
+  <span>PRIVACY IS NOT SECRECY ░ CYPHERPUNKS WRITE CODE ░ THE ARCHIVE REMEMBERS ░ BERLIN BLOCKCHAIN WEEK · 13–21 JUNE 2026 ░ CENSORSHIP RESISTANCE · OPEN SOURCE · PRIVACY · SECURITY ░ FEED THE FIRE ░ PRIVACY IS NOT SECRECY ░ CYPHERPUNKS WRITE CODE ░ THE ARCHIVE REMEMBERS ░ BERLIN BLOCKCHAIN WEEK · 13–21 JUNE 2026 ░ CENSORSHIP RESISTANCE · OPEN SOURCE · PRIVACY · SECURITY ░ FEED THE FIRE ░&nbsp;</span>
+</div>
+
+<nav class="jump" aria-label="Jump to section">
+  <div class="jump-in">
+    <span class="jump-label">// Jump:</span>
+    <a href="#mic">Rec</a>
+    <a href="#why">Why now</a>
+    <a href="#boat">The boat</a>
+    <a href="#badges">Badges</a>
+    <a href="#how">Protocol</a>
+    <a href="#join">Join</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="stamp">Scanned in the wild?<br>Good. It works.</div>
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Berlin Blockchain Week · 13–21 June 2026</span>
+        <h1>The<br>Cypherpunk<br><span class="pink">Archive</span></h1>
+        <p class="hero-sub">A collective memory for the movement, built live across Berlin in one week. Every story, vision, warning and rant — woven into a single knowledge graph.</p>
+        <div class="hero-cta">
+          <a class="btn" href="https://t.me/cypherpunk_archive_bot">Feed the Fire →</a>
+          <a class="btn ghost" href="https://cypherpunk.app.bonfires.ai/graph">View the graph ↗</a>
+        </div>
+      </div>
+      <div class="kg" aria-hidden="true">
+        <svg viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg">
+          <!-- edges -->
+          <g>
+            <line class="kg-edge" pathLength="1" x1="210" y1="70"  x2="96"  y2="128" style="animation-delay:.15s"/>
+            <line class="kg-edge" pathLength="1" x1="210" y1="70"  x2="318" y2="124" style="animation-delay:.25s"/>
+            <line class="kg-edge" pathLength="1" x1="210" y1="70"  x2="164" y2="190" style="animation-delay:.35s"/>
+            <line class="kg-edge" pathLength="1" x1="96"  y1="128" x2="64"  y2="238" style="animation-delay:.45s"/>
+            <line class="kg-edge" pathLength="1" x1="96"  y1="128" x2="164" y2="190" style="animation-delay:.5s"/>
+            <line class="kg-edge" pathLength="1" x1="64"  y1="238" x2="96"  y2="344" style="animation-delay:.6s"/>
+            <line class="kg-edge" pathLength="1" x1="164" y1="190" x2="282" y2="210" style="animation-delay:.65s"/>
+            <line class="kg-edge" pathLength="1" x1="318" y1="124" x2="282" y2="210" style="animation-delay:.7s"/>
+            <line class="kg-edge" pathLength="1" x1="282" y1="210" x2="340" y2="286" style="animation-delay:.8s"/>
+            <line class="kg-edge" pathLength="1" x1="164" y1="190" x2="180" y2="300" style="animation-delay:.85s"/>
+            <line class="kg-edge" pathLength="1" x1="180" y1="300" x2="96"  y2="344" style="animation-delay:.95s"/>
+            <line class="kg-edge" pathLength="1" x1="180" y1="300" x2="262" y2="352" style="animation-delay:1s"/>
+            <line class="kg-edge" pathLength="1" x1="262" y1="352" x2="340" y2="286" style="animation-delay:1.1s"/>
+            <line class="kg-edge" pathLength="1" x1="262" y1="352" x2="340" y2="408" style="animation-delay:1.2s"/>
+            <!-- pink "data flowing" overlays -->
+            <line class="kg-flow" pathLength="1" x1="210" y1="70"  x2="164" y2="190"/>
+            <line class="kg-flow" pathLength="1" x1="180" y1="300" x2="262" y2="352" style="animation-delay:-2.4s"/>
+            <line class="kg-flow" pathLength="1" x1="282" y1="210" x2="340" y2="286" style="animation-delay:-4.8s"/>
+          </g>
+          <!-- nodes -->
+          <g>
+            <circle class="kg-node pink kg-pulse" cx="210" cy="70"  r="9"/>
+            <circle class="kg-node" cx="96"  cy="128" r="6" style="animation-delay:.3s"/>
+            <circle class="kg-node" cx="318" cy="124" r="6" style="animation-delay:.4s"/>
+            <circle class="kg-node" cx="164" cy="190" r="6" style="animation-delay:.5s"/>
+            <circle class="kg-node" cx="282" cy="210" r="6" style="animation-delay:.65s"/>
+            <circle class="kg-node" cx="64"  cy="238" r="6" style="animation-delay:.75s"/>
+            <circle class="kg-node" cx="340" cy="286" r="6" style="animation-delay:.9s"/>
+            <circle class="kg-node" cx="180" cy="300" r="7" style="animation-delay:1s"/>
+            <circle class="kg-node" cx="96"  cy="344" r="6" style="animation-delay:1.1s"/>
+            <circle class="kg-node pink kg-pulse2" cx="262" cy="352" r="7"/>
+            <circle class="kg-node" cx="340" cy="408" r="6" style="animation-delay:1.3s"/>
+          </g>
+          <!-- labels -->
+          <g>
+            <g class="kg-tag pink" style="animation-delay:.2s"><rect x="172" y="32" width="76" height="19"/><text class="kg-label pink" x="210" y="46" text-anchor="middle">Privacy</text></g>
+            <g class="kg-tag" style="animation-delay:.4s"><rect x="77" y="97" width="38" height="18"/><text class="kg-label" x="96" y="110" text-anchor="middle">PGP</text></g>
+            <g class="kg-tag" style="animation-delay:.5s"><rect x="278" y="93" width="80" height="18"/><text class="kg-label" x="318" y="106" text-anchor="middle">ZK-Proofs</text></g>
+            <g class="kg-tag" style="animation-delay:.6s"><rect x="115" y="159" width="66" height="18"/><text class="kg-label" x="148" y="172" text-anchor="middle">Mixnets</text></g>
+            <g class="kg-tag" style="animation-delay:.75s"><rect x="277" y="219" width="38" height="18"/><text class="kg-label" x="296" y="232" text-anchor="middle">Tor</text></g>
+            <g class="kg-tag" style="animation-delay:.85s"><rect x="37" y="207" width="46" height="18"/><text class="kg-label" x="60" y="220" text-anchor="middle">E2EE</text></g>
+            <g class="kg-tag" style="animation-delay:1s"><rect x="293" y="255" width="94" height="18"/><text class="kg-label" x="340" y="268" text-anchor="middle">Code=Speech</text></g>
+            <g class="kg-tag" style="animation-delay:1.1s"><rect x="112" y="311" width="108" height="18"/><text class="kg-label" x="166" y="324" text-anchor="middle">Manifesto '93</text></g>
+            <g class="kg-tag" style="animation-delay:1.2s"><rect x="69" y="355" width="46" height="18"/><text class="kg-label" x="92" y="368" text-anchor="middle">Keys</text></g>
+            <g class="kg-tag pink" style="animation-delay:1.25s"><rect x="233" y="364" width="58" height="19"/><text class="kg-label pink" x="262" y="378" text-anchor="middle">CROPS</text></g>
+            <g class="kg-tag" style="animation-delay:1.4s"><rect x="308" y="417" width="60" height="18"/><text class="kg-label" x="338" y="430" text-anchor="middle">Berlin</text></g>
+          </g>
+        </svg>
+        <div class="kg-cap"><span class="slash">//</span> Live graph · <span id="kg-count">247</span> nodes<span class="kg-caret">▌</span><span class="kg-feed" id="kg-feed">+ key ceremony @ c-base</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="mic">
+  <div class="wrap">
+    <div class="label">// Field recording</div>
+    <p class="mic-line">Be a cypherpunk journalist. Ask your friend, someone you respect, the speaker whose talk inspired you — to share their story. Being interviewed? <em>Say something worth remembering.</em></p>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="label">// Why now</div>
+    <h2>Two manifestos,<br>33 years apart</h2>
+    <p>The surveillance state the first cypherpunks warned of is now our shared reality. Military-grade infrastructure encroaches on all our lives, and crypto's identity is drifting slowly more corporate. Can the <strong>CROPS</strong> mandate be the flag that the Ethereum community bears towards the promised land?</p>
+
+    <div class="manifestos">
+      <div class="mani">
+        <div class="mani-year">1993</div>
+        <blockquote>“Privacy is necessary for an open society in the electronic age. &hellip; Cypherpunks write code.”</blockquote>
+        <cite><a href="https://www.activism.net/cypherpunk/manifesto.html">Eric Hughes — A Cypherpunk's Manifesto · 9 March 1993 ↗</a></cite>
+      </div>
+      <div class="mani-divider"><span>33 years</span></div>
+      <div class="mani mani-pink">
+        <div class="mani-year">2026</div>
+        <blockquote>“Censorship resistance. Open source. Privacy. Security. Properties, not features — <span class="pink-text">non&#8209;negotiable</span>.”</blockquote>
+        <cite><a href="https://ethereum.foundation/ef-mandate.pdf">Ethereum Foundation — the CROPS mandate · 2026 ↗</a></cite>
+      </div>
+    </div>
+
+    <h3 class="why-sub">Berlin never stopped</h3>
+    <p>The thread between the two runs through this city. The Chaos Computer Club was hacking the Bundespost a decade before the manifesto was written. Ethereum's first engineering hub worked out of Kreuzberg. The movement's Berlin organs never left:</p>
+    <div class="org-row">
+      <span class="org">CCC · est. 1981</span>
+      <span class="org">c-base · est. 1995</span>
+      <span class="org">ETHDEV · Kreuzberg '14</span>
+      <span class="org">Parity</span>
+      <span class="org">Gnosis</span>
+      <span class="org">Least Authority</span>
+      <span class="org">ETHBerlin / DoD</span>
+      <span class="org">Fullnode</span>
+    </div>
+    <p class="why-close">So for one week, while the whole movement is in one city, we're doing the most cypherpunk thing possible: <strong>writing it down, together, on infrastructure nobody can take away.</strong></p>
+  </div>
+</section>
+
+<section class="boat" id="boat">
+  <div class="wrap">
+    <div class="label">// Warning: unmoored</div>
+    <h2>The boat has opinions</h2>
+    <p>For two days, the archive takes to the water. The boat carries its own agent — plugged into the shared manifesto, fluent in everything the community has fed the fire, and entirely off the leash.</p>
+    <p>It will post what Berlin is actually thinking. Unfiltered synthesis, live from the Spree. Come aboard, say something memorable, and watch it surface on the timeline twenty minutes later.</p>
+    <div class="armor" role="img" aria-label="A PGP-style block from the boat agent">
+      <span class="head">-----BEGIN TRANSMISSION // VESSEL-----</span>
+      <span class="body">i have read every confession this city whispered into a QR code this week and let me tell you the cypherpunks are NOT okay (affectionate). more at sea.</span>
+      <span class="tail">-----END TRANSMISSION-----</span>
+    </div>
+    <div class="warning">⚠ Board at your own reputational risk · dates + handle announced soon</div>
+  </div>
+</section>
+
+<section id="badges">
+  <div class="wrap">
+    <div class="label">// Credentials</div>
+    <h2>Cypherpunk Badges</h2>
+    <p>Reputation in this movement was never about followers. It's about what you've built, defended and refused to compromise on. Badges are minted against the archive's own rubric — the values of the community, derived from the community.</p>
+    <div class="badge-grid">
+      <div class="badge">
+        <span class="tag">For people</span>
+        <h3>Voices</h3>
+        <p>Contributors whose stories, ideas and code shaped the archive's understanding of the movement.</p>
+      </div>
+      <div class="badge">
+        <span class="tag">For projects</span>
+        <h3>Builders</h3>
+        <p>Teams shipping censorship-resistant, open, private, secure tools — recognised by the people who actually use them.</p>
+      </div>
+      <div class="badge">
+        <span class="tag">For what's next</span>
+        <h3>Stewards</h3>
+        <p>Badge-holders who carry the archive forward: governance, curation, and quadratic funding for the next generation of CROPS.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="label">// Protocol</div>
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div>
+          <h3>Scan</h3>
+          <p>QR codes are pasted across the week — venues, spätis, toilets, boats, lampposts. Every code is a door into the same fire. Scan one.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div>
+          <h3>Speak</h3>
+          <p>The archive's agent meets you with one question: <strong>what does cypherpunk mean in 2026?</strong> Tell it your story, your project, your fear, your heresy. Two minutes or twenty. Anonymous if you want — this is the one archive that won't dox you.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div>
+          <h3>Synthesise</h3>
+          <p>Every contribution weaves into the graph. Day by day, the archive becomes the amalgamated mind of Berlin's cypherpunk community — its projects, its principles, its fault lines. Searchable. Citable. Alive. Query it any time and watch it grow.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div>
+          <h3>Badge</h3>
+          <p>At week's end, the archive becomes a rubric. <strong>Cypherpunk Badges</strong> go to the people and projects that embody the values the community itself articulated — not what a committee decided, what <em>you</em> said.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div>
+          <h3>Govern</h3>
+          <p>Badges carry weight. Holders help steer what comes next — curating the archive, signalling in quadratic funding rounds, allocating to the projects keeping the CROPS alive. Credentials earned by contribution, not bought.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <div class="label">// Open invitation</div>
+    <h2>Feed the fire</h2>
+    <p>The archive only exists if you speak into it. One scan, one story, and you're part of the permanent record of the week Berlin reignited its roots.</p>
+    <div class="hero-cta">
+      <a class="btn" href="https://t.me/cypherpunk_archive_bot">Contribute now →</a>
+      <a class="btn ghost" href="https://cypherpunk.app.bonfires.ai/graph">View the graph ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="foot-brand">Built on <span>Bonfires</span></div>
+      <p class="colophon">Bonfires turns community conversation into structured, queryable knowledge graphs — accessible to humans and agents alike. The Cypherpunk Archive belongs to its contributors.</p>
+    </div>
+    <div class="foot-links">
+      <!-- TODO: swap in real links -->
+      <a href="https://blockchainweek.berlin/">Berlin Blockchain Week ↗</a>
+      <a href="#">Bonfires ↗</a>
+      <a href="#">@handle on X ↗</a>
+      <a href="#">Telegram ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var count = document.getElementById('kg-count');
+  var feed = document.getElementById('kg-feed');
+  if(!count || !feed) return;
+  var n = 247;
+  var items = [
+    '+ zk-email attestations',
+    '+ nym mixnet node, kreuzberg',
+    '+ "privacy is a public good"',
+    '+ key ceremony @ c-base',
+    '+ lightning privacy rant',
+    '+ remailer revival thread',
+    '+ seed phrase inheritance fear',
+    '+ "the suits ring the bell now"',
+    '+ open hardware wallet schematic',
+    '+ manifesto, annotated'
+  ];
+  var i = 0;
+  setInterval(function(){
+    n += Math.floor(Math.random()*3)+1;
+    count.textContent = n;
+    i = (i+1) % items.length;
+    feed.textContent = items[i];
+  }, 3800);
+})();
+</script>
+
+</body>
+</html>
